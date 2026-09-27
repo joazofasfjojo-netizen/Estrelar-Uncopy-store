@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estrelar.Uncopy.com.br - Loja Oficial</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#e0f2fe',
+                            100: '#bae6fd',
+                            500: '#0284c7',
+                            600: '#026aa7',
+                            700: '#03588c',
+                            accent: '#facc15', // Amarelo da logo
+                            dark: '#0b1329',
+                            card: '#111b3c'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-brand-dark text-slate-100 min-h-screen flex flex-col font-sans selection:bg-brand-accent selection:text-slate-950">
+
+    <!-- Navbar -->
+    <header class="sticky top-0 z-50 bg-brand-card/90 backdrop-blur-md border-b border-sky-500/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="filterCategory('all')">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-sky-500 to-brand-accent p-0.5 flex items-center justify-center shadow-lg shadow-sky-500/20">
+                    <div class="w-full h-full bg-brand-dark rounded-[10px] flex items-center justify-center">
+                        <i class="fa-solid fa-gamepad text-brand-accent text-xl"></i>
+                    </div>
+                </div>
+                <div>
+                    <span class="text-xl font-black tracking-wider bg-gradient-to-r from-sky-400 via-sky-200 to-brand-accent bg-clip-text text-transparent">Estrelar.Uncopy.com.br</span>
+                    <span class="block text-[10px] text-brand-accent font-semibold tracking-widest uppercase">Loja Oficial de Roblox</span>
+                </div>
+            </div>
+
+            <!-- Carrinho e Ações -->
+            <div class="flex items-center space-x-4">
+                <button onclick="toggleCart()" class="relative bg-sky-600/20 hover:bg-sky-600/30 border border-sky-500/40 text-sky-300 px-4 py-2.5 rounded-xl flex items-center space-x-2 transition-all">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span class="font-bold text-sm hidden sm:inline">Carrinho</span>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-brand-accent text-slate-950 text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center shadow-md">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        
+        <!-- Banner Hero -->
+        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-sky-900/60 via-blue-950/80 to-brand-card border border-sky-500/30 p-8 sm:p-12 mb-10 shadow-2xl">
+            <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl text-sky-400 pointer-events-none">
+                <i class="fa-solid fa-gamepad"></i>
+            </div>
+            <div class="relative z-10 max-w-2xl">
+                <span class="inline-block bg-sky-500/20 border border-sky-400/30 text-sky-300 text-xs font-bold px-3 py-1 rounded-full mb-4 uppercase tracking-wider">
+                    ⚡ Entrega Rápida & Segura via Pix
+                </span>
+                <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight mb-4">
+                    Os melhores itens e scripts para os teus jogos favoritos!
+                </h1>
+                <p class="text-slate-300 text-sm sm:text-base mb-6">
+                    Compre com total segurança na <span class="text-brand-accent font-semibold">Estrelar.Uncopy.com.br</span>. Pagamento instantâneo via Pix com liberação automatizada.
+                </p>
+            </div>
+        </div>
+
+        <!-- Filtros de Categorias -->
+        <div class="flex flex-wrap gap-2 mb-8 border-b border-sky-500/10 pb-4">
+            <button onclick="filterCategory('all')" id="btn-cat-all" class="cat-btn px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-sky-500 text-slate-950 shadow-lg shadow-sky-500/20">
+                ✨ Todos os Jogos
+            </button>
+            <button onclick="filterCategory('steal-a-brainrot')" id="btn-cat-steal-a-brainrot" class="cat-btn px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-brand-card text-slate-300 hover:bg-sky-900/30 border border-sky-500/20">
+                🎮 Steal a Brainrot
+            </button>
+            <button onclick="filterCategory('steal-a-egg')" id="btn-cat-steal-a-egg" class="cat-btn px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-brand-card text-slate-300 hover:bg-sky-900/30 border border-sky-500/20">
+                🥚 Steal a Egg
+            </button>
+            <button onclick="filterCategory('gamajo-estrelar')" id="btn-cat-gamajo-estrelar" class="cat-btn px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-brand-card text-slate-300 hover:bg-sky-900/30 border border-sky-500/20">
+                ⭐ Gamajo Estrelar
+            </button>
+        </div>
+
+        <!-- Vitrine de Produtos -->
+        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Os produtos serão injetados via JavaScript -->
+        </div>
+    </main>
+
+    <!-- Modal do Carrinho / Checkout -->
+    <div id="cart-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-brand-card border border-sky-500/30 rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+            <div class="p-6 border-b border-sky-500/20 flex items-center justify-between bg-sky-950/30">
+                <h3 class="text-xl font-bold text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-cart-shopping text-sky-400"></i>
+                    <span>Seu Carrinho</span>
+                </h3>
+                <button onclick="toggleCart()" class="text-slate-400 hover:text-white text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div id="cart-items" class="p-6 overflow-y-auto flex-grow divide-y divide-sky-500/10">
+                <!-- Itens do carrinho -->
+            </div>
+
+            <div class="p-6 border-t border-sky-500/20 bg-sky-950/40">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-slate-400 font-medium">Total a pagar:</span>
+                    <span id="cart-total" class="text-2xl font-black text-brand-accent">R$ 0,00</span>
+                </div>
+                <button onclick="openCheckout()" class="w-full bg-gradient-to-r from-sky-500 to-brand-accent text-slate-950 font-black py-3.5 rounded-xl hover:opacity-90 transition-all shadow-lg shadow-sky-500/20 flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-qrcode"></i>
+                    <span>Gerar Pagamento Pix</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Pagamento Pix -->
+    <div id="checkout-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-brand-card border border-sky-500/30 rounded-3xl w-full max-w-md p-6 text-center shadow-2xl relative">
+            <button onclick="closeCheckout()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="w-12 h-12 bg-sky-500/20 text-sky-400 rounded-2xl flex items-center justify-center mx-auto mb-4 text-xl">
+                <i class="fa-solid fa-qrcode"></i>
+            </div>
+            
+            <h3 class="text-xl font-bold text-white mb-1">Pagamento via Pix</h3>
+            <p class="text-xs text-slate-400 mb-4">Escaneie o QR Code ou copie a chave abaixo</p>
+
+            <!-- Roblox Nick Input -->
+            <div class="mb-4 text-left">
+                <label class="block text-xs font-bold text-sky-300 uppercase mb-1">Seu Nick no Roblox:</label>
+                <input type="text" id="roblox-nick" placeholder="Ex: Gustavo_GTV" class="w-full bg-brand-dark border border-sky-500/30 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-sky-400">
+            </div>
+
+            <!-- Mock QR Code Box -->
+            <div class="bg-white p-4 rounded-2xl inline-block mb-4 shadow-inner">
+                <div class="w-48 h-48 bg-slate-900 rounded-xl flex flex-col items-center justify-center text-center p-4 text-white">
+                    <i class="fa-solid fa-qrcode text-6xl text-sky-400 mb-2"></i>
+                    <span class="text-[10px] text-slate-300">QR Code Pix Gerado com Sucesso</span>
+                </div>
+            </div>
+
+            <!-- Chave Pix Copia e Cola -->
+            <div class="mb-6">
+                <label class="block text-xs font-bold text-slate-400 mb-1">Chave Pix (Copia e Cola):</label>
+                <div class="flex items-center bg-brand-dark border border-sky-500/30 rounded-xl p-2">
+                    <input type="text" readonly id="pix-key-input" value="749f1d5f-85bb-4477-89f1-d263f1a169f4" class="bg-transparent text-xs text-sky-300 w-full px-2 focus:outline-none">
+                    <button onclick="copyPixKey()" class="bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold px-3 py-1.5 rounded-lg text-xs transition-all flex items-center space-x-1">
+                        <i class="fa-solid fa-copy"></i>
+                        <span>Copiar</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-sky-950/40 border border-sky-500/20 rounded-xl p-3 text-xs text-sky-300 mb-4">
+                💡 Após o pagamento, envie o comprovante no Discord oficial da loja!
+            </div>
+
+            <button onclick="finalizeOrder()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black py-3 rounded-xl transition-all shadow-lg shadow-emerald-500/20">
+                Já fiz o pagamento!
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-auto border-t border-sky-500/10 bg-brand-card/50 py-6 text-center text-xs text-slate-400">
+        <p>&copy; 2026 Estrelar.Uncopy.com.br - Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Script da Loja -->
+    <script>
+        const products = [
+            {
+                id: 1,
+                name: "STEAL A BRAINROT SEM ANIMAÇÃO",
+                category: "steal-a-brainrot",
+                price: 5.00,
+                desc: "Script e base do Steal a Brainrot sem animações inclusas.",
+                icon: "fa-gamepad"
+            },
+            {
+                id: 2,
+                name: "STEAL A BRAINROT COM ANIMAÇÃO",
+                category: "steal-a-brainrot",
+                price: 10.00,
+                desc: "Versão completa do Steal a Brainrot com animações e scripts prontos.",
+                icon: "fa-film"
+            },
+            {
+                id: 3,
+                name: "STEAL A EGG SEM PAINEL",
+                category: "steal-a-egg",
+                price: 5.00,
+                desc: "Jogo de incubação e roubo de ovos sem o painel administrativo.",
+                icon: "fa-egg"
+            },
+            {
+                id: 4,
+                name: "STEAL A EGG COM PAINEL",
+                category: "steal-a-egg",
+                price: 10.00,
+                desc: "Jogo completo com painel de controle e gerenciamento avançado.",
+                icon: "fa-sliders"
+            },
+            {
+                id: 5,
+                name: "GAMAJO ESTRELAR SEM PAINEL",
+                category: "gamajo-estrelar",
+                price: 20.00,
+                desc: "Versão padrão do Gamajo Estrelar pronta para uso.",
+                icon: "fa-star"
+            },
+            {
+                id: 6,
+                name: "GAMAJO ESTRELAR COM PAINEL",
+                category: "gamajo-estrelar",
+                price: 30.00,
+                desc: "Versão premium do Gamajo Estrelar com painel admin completo.",
+                icon: "fa-crown"
+            }
+        ];
+
+        let cart = [];
+
+        function renderProducts(filter = 'all') {
+            const grid = document.getElementById('products-grid');
+            grid.innerHTML = '';
+
+            const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
+
+            filtered.forEach(product => {
+                const card = document.createElement('div');
+                card.className = "bg-brand-card border border-sky-500/20 hover:border-sky-500/50 rounded-2xl p-6 flex flex-col justify-between transition-all shadow-xl group";
+                card.innerHTML = `
+                    <div>
+                        <div class="w-12 h-12 bg-sky-500/10 group-hover:bg-sky-500/20 text-sky-400 rounded-xl flex items-center justify-center text-xl mb-4 transition-all">
+                            <i class="fa-solid ${product.icon}"></i>
+                        </div>
+                        <h3 class="text-base font-bold text-white mb-2">${product.name}</h3>
+                        <p class="text-xs text-slate-400 mb-4">${product.desc}</p>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xl font-black text-brand-accent">R$ ${product.price.toFixed(2).replace('.', ',')}</span>
+                        </div>
+                        <button onclick="addToCart(${product.id})" class="w-full bg-sky-600 hover:bg-sky-500 text-slate-950 font-bold py-2.5 rounded-xl transition-all shadow-md flex items-center justify-center space-x-2 text-xs">
+                            <i class="fa-solid fa-cart-plus"></i>
+                            <span>Adicionar ao Carrinho</span>
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterCategory(category) {
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                btn.className = "cat-btn px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-brand-card text-slate-300 hover:bg-sky-900/30 border border-sky-500/20";
+            });
+            document.getElementById(`btn-cat-${category}`).className = "cat-btn px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-sky-500 text-slate-950 shadow-lg shadow-sky-500/20";
+            renderProducts(category);
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            cart.push(product);
+            updateCartUI();
+            toggleCart();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            document.getElementById('cart-count').innerText = cart.length;
+            const container = document.getElementById('cart-items');
+            container.innerHTML = '';
+
+            if (cart.length === 0) {
+                container.innerHTML = `<p class="text-center text-xs text-slate-500 py-8">O teu carrinho está vazio.</p>`;
+                document.getElementById('cart-total').innerText = 'R$ 0,00';
+                return;
+            }
+
+            let total = 0;
+            cart.forEach((item, index) => {
+                total += item.price;
+                const div = document.createElement('div');
+                div.className = "py-3 flex items-center justify-between";
+                div.innerHTML = `
+                    <div>
+                        <h4 class="text-xs font-bold text-white">${item.name}</h4>
+                        <span class="text-xs text-brand-accent font-semibold">R$ ${item.price.toFixed(2).replace('.', ',')}</span>
+                    </div>
+                    <button onclick="removeFromCart(${index})" class="text-red-400 hover:text-red-300 text-xs">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                `;
+                container.appendChild(div);
+            });
+
+            document.getElementById('cart-total').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+        }
+
+        function toggleCart() {
+            const modal = document.getElementById('cart-modal');
+            modal.classList.toggle('hidden');
+        }
+
+        function openCheckout() {
+            if (cart.length === 0) {
+                alert('Adicione itens ao carrinho primeiro!');
+                return;
+            }
+            toggleCart();
+            document.getElementById('checkout-modal').classList.remove('hidden');
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkout-modal').classList.add('hidden');
+        }
+
+        function copyPixKey() {
+            const input = document.getElementById('pix-key-input');
+            navigator.clipboard.writeText(input.value);
+            alert('Chave Pix copiada com sucesso!');
+        }
+
+        function finalizeOrder() {
+            const nick = document.getElementById('roblox-nick').value;
+            if (!nick.trim()) {
+                alert('Por favor, digite o seu nick do Roblox!');
+                return;
+            }
+            alert('Pedido registrado! Chave Pix principal atrelada à sua conta.');
+            cart = [];
+            updateCartUI();
+            closeCheckout();
+        }
+
+        renderProducts('all');
+    </script>
+</body>
+</html>
